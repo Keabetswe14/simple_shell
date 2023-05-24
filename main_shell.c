@@ -4,7 +4,7 @@
  * @ac: argument counter
  * @av: arguments
  * @env: environ
- * Return: exit = 0.
+ * Return: _exit = 0.
  */
 int main(int ac, char **av, char **env)
 {
@@ -25,13 +25,13 @@ int main(int ac, char **av, char **env)
 				continue;
 			}
 			if ((!_strcmp(user_command[0], "exit")) && user_command[1] == NULL)
-				_exit_command(user_command, getcommand, exit);
+				_exit_command(user_command, getcommand, _exit);
 			if (!_strcmp(user_command[0], "env"))
 				_getenv(env);
 			else
 			{
 				n = _values_path(&user_command[0], env);
-				exit = _fork_fun(user_command, av, env, getcommand, pathValue, n);
+				_exit = _fork_fun(user_command, av, env, getcommand, pathValue, n);
 				if (n == 0)
 					free(user_command[0]);
 			}
@@ -41,9 +41,9 @@ int main(int ac, char **av, char **env)
 		{
 			if (isatty(STDIN_FILENO))
 				write(STDOUT_FILENO, "\n", 1);
-			exit(exit);
+			exit(_exit);
 		}
 		free(getcommand);
 	}
-	return (exit);
+	return (_exit);
 }
